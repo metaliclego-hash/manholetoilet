@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>マンホールトイレ AR</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Hiragino Sans", sans-serif;
+      background: #0e1626;
+      color: #e6eefc;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 1.5rem;
+    }
+    .card {
+      background: rgba(255,255,255,0.05);
+      border: 1px solid rgba(120,160,255,0.3);
+      border-radius: 24px;
+      padding: 2rem 1.5rem;
+      max-width: 460px;
+      width: 100%;
+    }
+    h1 {
+      font-size: 1.4rem;
+      font-weight: 700;
+      text-align: center;
+      background: linear-gradient(135deg, #7fb2ff, #c9dcff);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      margin-bottom: 0.2rem;
+    }
+    .subtitle { text-align: center; font-size: 0.8rem; color: #8a9bbb; margin-bottom: 1.2rem; }
+
+    .tabs { display: flex; gap: 0.5rem; margin-bottom: 1rem; }
+    .tab {
+      flex: 1; padding: 0.55rem; border-radius: 50px; border: 1px solid rgba(120,160,255,0.35);
+      background: transparent; color: #b8c8e8; font-size: 0.85rem; font-family: inherit;
+      -webkit-tap-highlight-color: transparent;
+    }
+    .tab[aria-selected="true"] { background: rgba(80,130,240,0.3); color: #fff; border-color: #6f9cff; }
+
+    /* rel="ar" のリンクは最初の子要素が <img> である必要がある（Safari の仕様） */
+    .preview {
+      display: block;
+      margin: 0 auto 1.2rem;
+      border-radius: 16px;
+      background:
+        repeating-conic-gradient(rgba(255,255,255,0.06) 0 25%, transparent 0 50%) 0 0 / 24px 24px;
+      -webkit-tap-highlight-color: transparent;
+    }
+    .preview img { display: block; width: 100%; max-height: 48vh; object-fit: contain; }
+
+    .ar-btn {
+      display: flex; align-items: center; justify-content: center; gap: 0.6rem;
+      width: 100%; background: linear-gradient(135deg, #2f6fe0, #1d4fb0);
+      color: white; text-decoration: none; font-size: 1.1rem; font-weight: 600;
+      padding: 1rem; border-radius: 50px;
+      box-shadow: 0 4px 20px rgba(60,120,255,0.35);
+      -webkit-tap-highlight-color: transparent;
+      transition: transform 0.15s;
+    }
+    .ar-btn:active { transform: scale(0.97); }
+
+    .spec {
+      margin-top: 1.2rem; font-size: 0.78rem; line-height: 1.7; color: #b8c6de;
+      border-top: 1px solid rgba(255,255,255,0.08); padding-top: 0.9rem;
+    }
+    .spec dt { color: #fff; font-weight: 600; }
+    .spec dd { margin-bottom: 0.3rem; }
+
+    .howto {
+      margin-top: 1rem;
+      background: rgba(0,0,0,0.25); border-radius: 14px;
+      padding: 0.9rem 1rem;
+      font-size: 0.82rem; line-height: 1.7; color: #c3cfe6;
+      list-style: none;
+    }
+    .howto b { color: #fff; font-weight: 600; }
+    .status { text-align: center; font-size: 0.75rem; color: #e99; margin-top: 0.8rem; min-height: 1em; }
+    .badge { text-align: center; font-size: 0.7rem; color: #56637d; margin-top: 0.6rem; line-height: 1.6; }
+    .badge a { color: #7f93b8; }
+  </style>
+</head>
+<body>
+<div class="card">
+  <h1>マンホールトイレ AR</h1>
+  <p class="subtitle">洋式タイプ VE100W／PTAM テント（Mサイズ）付を原寸でARに設置</p>
+
+  <div class="tabs" role="tablist">
+    <button class="tab" role="tab" aria-selected="true" data-model="toilet_tent">テント付き</button>
+    <button class="tab" role="tab" aria-selected="false" data-model="toilet">トイレのみ</button>
+  </div>
+
+  <a id="preview" class="preview" rel="ar" href="toilet_tent.usdz">
+    <img id="preview-img" src="toilet_tent.png" alt="マンホールトイレ（テント付き）">
+  </a>
+
+  <a id="ar-btn" class="ar-btn" rel="ar" href="toilet_tent.usdz">
+    <img src="" alt="" style="display:none" width="0" height="0">
+    <svg width="22" height="22" viewBox="0 0 24 24" fill="none"
+         stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M12 2L2 7l10 5 10-5-10-5z"/>
+      <path d="M2 17l10 5 10-5"/>
+      <path d="M2 12l10 5 10-5"/>
+    </svg>
+    <span>ARで見る</span>
+  </a>
+
+  <dl class="spec">
+    <dt>トイレ</dt><dd>W670 × D750 × H790〜865 mm（本体 13.5kg）</dd>
+    <dt>テント</dt><dd>W1200 × D1200 × H2000 mm（本体 5.4kg）</dd>
+    <dt>対応マンホール内径</dt><dd>20〜60 cm</dd>
+  </dl>
+
+  <ul class="howto">
+    <li><b>設置</b>：iPhoneを床に向けてゆっくり動かすと、床に置かれます</li>
+    <li><b>移動</b>：モデルを指1本で押さえたままドラッグ</li>
+    <li><b>向き</b>：2本指でひねる（回転）</li>
+    <li><b>原寸</b>：最初は実物大で表示されます。ピンチで拡大縮小した後も100%付近で吸着します</li>
+  </ul>
+
+  <p id="status" class="status"></p>
+  <p class="badge">
+    iPhone / iPad の Safari（AR Quick Look）対応<br>
+    3Dモデルは<a href="https://ec.midori-anzen.com/shop/g/g4082105820/">商品ページ</a>の寸法・写真をもとにした簡易モデルです
+  </p>
+</div>
+
+<script>
+const labels = { toilet_tent: 'マンホールトイレ（テント付き）', toilet: 'マンホールトイレ（トイレのみ）' };
+document.querySelectorAll('.tab').forEach(tab => {
+  tab.addEventListener('click', () => {
+    const m = tab.dataset.model;
+    document.querySelectorAll('.tab').forEach(t => t.setAttribute('aria-selected', t === tab));
+    document.getElementById('preview').href = m + '.usdz';
+    document.getElementById('ar-btn').href = m + '.usdz';
+    const img = document.getElementById('preview-img');
+    img.src = m + '.png';
+    img.alt = labels[m];
+  });
+});
+
+// AR Quick Look が使えない環境（PC・Android など）では案内を表示
+const a = document.createElement('a');
+if (!(a.relList && a.relList.supports && a.relList.supports('ar'))) {
+  document.getElementById('status').textContent =
+    'この端末はAR Quick Lookに対応していません。iPhone / iPad の Safari で開いてください。';
+}
+</script>
+</body>
+</html>
